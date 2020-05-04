@@ -1,16 +1,4 @@
 
-students = [{:name => "Dr. Hannibal Lecter", :cohort => :november},
-    {:name => "Darth Vader", :cohort => :november},
-    {:nmae => "Nurse Ratched", :cohort => :november},
-    {:name => "Michael Corleone", :cohort => :november},
-    {:name => "Alex DeLarge", :cohort =>  :november},
-    {:nmae => "The Wicked Witch of the West", :cohort => :november},
-    {:name => "Terminator", :cohort => :november},
-    {:name => "Freddy Krueger", :cohort => :november},
-    {:name => "The Joker", :cohort => :november},
-    {:name => "Joffrey Baratheon", :cohort => :november},
-    {:name => "Norman Bates", :cohort => :november}]
-
 def print_header    
     puts "The students of Villains Academy"
     puts "-------------"
@@ -22,8 +10,22 @@ end
 
 def print_footer(list)
     puts "Overall we have #{list.count} students"
-end 
+end
 
+def input_students
+    puts "Enter the name of students (one per line)"
+    puts "To finish enter a black line"
+    students = []
+    name =gets.chomp
+    while !name.empty?
+        students << { :name => name, :cohort => :november}
+        puts "We now have #{students.count} students"
+        name = gets.chomp
+    end
+    students
+end
+
+students = input_students
 print_header
 print_list(students)
 print_footer(students)
