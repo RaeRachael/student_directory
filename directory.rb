@@ -1,3 +1,4 @@
+student_count = 11
 puts "The students of Villains Academy"
 puts "-------------"
 puts "Dr. Hannibal Lecter"
@@ -11,4 +12,4 @@ puts "Freddy Krueger"
 puts "The Joker"
 puts "Joffrey Baratheon"
 puts "Norman Bates"
-puts "Overall we have 11 students" #btw i know what a comment is
+puts "Overall we have #{student_count} students" #btw i know what a comment is
