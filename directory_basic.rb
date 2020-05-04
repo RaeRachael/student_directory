@@ -17,11 +17,11 @@ end
 def input_students
   puts "Enter the name of students (one per line)"
   puts "To finish enter a black line"
-  name =gets.chomp
+  name = STDIN.gets.chomp
   while !name.empty?
     @students << { :name => name, :cohort => :november}
     puts "We now have #{@students.count} students\n"
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
 end
 
@@ -43,7 +43,7 @@ end
 def interactive_menu
   loop do
     menu_options
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
   end
 end
 
@@ -71,14 +71,28 @@ def save_data
   file.close
 end
 
-def load_data
-  file = File.open("students.csv", "r")
+def load_data(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
     @students << {:name => name, :cohort => cohort}
   end
   file.close
 end
-  
+
+def load_existing_file
+  filename = ARGV.first
+  return if filename == nil
+  if File.exists?(filename)
+    load_data(filename)
+    puts "loaded #{@students.count} from #{filename}"
+  else
+    puts "#{filename} does not exist, exiting program"
+    exit
+  end
+end
+
+load_existing_file
+
 interactive_menu
 
