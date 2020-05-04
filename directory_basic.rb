@@ -33,6 +33,8 @@ def process(user_choice)
     output_students
   when 3.to_s
     save_data
+  when 4.to_s
+    load_data
   when 9.to_s
     exit
   end
@@ -49,6 +51,7 @@ def menu_options
   list_of_options = ["1, input students",
                     "2, view students",
                     "3, save data",
+                    "4, load saved data",
                     "9, exit"]
   puts list_of_options
 end
@@ -64,6 +67,15 @@ def save_data
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     file.puts student_data.join(",")
+  end
+  file.close
+end
+
+def load_data
+  file = File.open("students.csv", "r")
+  file.readlines.each do |line|
+    name, cohort = line.chomp.split(",")
+    @students << {:name => name, :cohort => cohort}
   end
   file.close
 end
