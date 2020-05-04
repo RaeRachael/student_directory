@@ -10,8 +10,20 @@ students = ["Dr. Hannibal Lecter",
     "The Joker",
     "Joffrey Baratheon",
     "Norman Bates"]
-    
-puts "The students of Villains Academy"
-puts "-------------"
-puts students
-puts "Overall we have #{students.count} students" 
+
+def print_header    
+    puts "The students of Villains Academy"
+    puts "-------------"
+end
+
+def print_list(list)
+    puts list
+end
+
+def print_footer(list)
+    puts "Overall we have #{list.count} students"
+end 
+
+print_header
+print_list(students)
+print_footer(students)
