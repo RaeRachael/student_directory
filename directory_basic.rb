@@ -65,8 +65,8 @@ def output_students
 end
 
 def save_data
-  filename = filename_choice
-  file = File.open(filename, "w")
+  filename_choice
+  file = File.open(@filename, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     file.puts student_data.join(",")
@@ -74,15 +74,15 @@ def save_data
   file.close
 end
 
-def load_data()
-  filename = filename_choice
-  file_exist_check(filename)
-  read_data_from(filename)
-  count_loaded_students_from(filename)
+def load_data
+  filename_choice
+  return if file_exist_check == false
+  read_data_from_file
+  count_loaded_students_from
 end
 
-def read_data_from(filename)
-  file = File.open(filename, "r")
+def read_data_from_file
+  file = File.open(@filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
     push_to_array(name, cohort)
@@ -91,15 +91,14 @@ def read_data_from(filename)
 end
 
 def load_from_existing_file
-  filename = ARGV.first || "students.csv" 
-  return if filename == nil
-  file_exist_check(filename)
-  read_data_from(filename)
-  count_loaded_students_from(filename)
+  @filename = ARGV.first || "students.csv" 
+  exit if file_exist_check == false
+  read_data_from_file
+  count_loaded_students_from
 end
   
-def count_loaded_students_from(filename)
-  puts "loaded #{@students.count} from #{filename}"
+def count_loaded_students_from
+  puts "loaded #{@students.count} from #{@filename}"
 end
 
 def push_to_array(name, cohort = :november)
@@ -108,16 +107,15 @@ end
 
 def filename_choice
   puts "enter filename, no filename entry will pick 'students.csv'"
-  filename = gets.chomp
-  filename = "students.csv" if filename == ""
-  file_exist_check(filename)
-  filename
+  @filename = gets.chomp
+  @filename = "students.csv" if @filename == ""
+  @filename
 end
 
-def file_exist_check(filename)
-  if !File.exists?(filename)
-    puts "#{filename} does not exist, exiting program"
-    exit
+def file_exist_check
+  if !File.exist?(@filename)
+    puts "#{@filename} does not exist,"
+    return false
   end
 end
 
