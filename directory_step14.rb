@@ -29,7 +29,7 @@ end
 
 def process(user_choice)
   case user_choice
-  when 1.to_s9
+  when 1.to_s
     input_students
   when 2.to_s
     output_students
@@ -68,12 +68,12 @@ end
 
 def save_data
   filename_choice
-  file = File.open(@filename, "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    file.puts student_data.join(",")
+  File.open(@filename, "w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      file.puts student_data.join(",")
+    end
   end
-  file.close
 end
 
 def load_data
@@ -84,12 +84,12 @@ def load_data
 end
 
 def read_data_from_file
-  file = File.open(@filename, "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
-    push_to_array(name, cohort)
+  File.open(@filename, "r") do |file|
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(",")
+      push_to_array(name, cohort)
+    end
   end
-  file.close
 end
 
 def load_from_existing_file
