@@ -1,3 +1,4 @@
+require 'csv'
 
 @students = []
 
@@ -17,13 +18,13 @@ end
 def input_students
   puts "Enter 'name, cohort' empty cohort will default to novemebr"
   puts "To finish enter a black line"
-  input = STDIN.gets.chomp
-  name, cohort = input.split(", ")
-  cohort ||= "november"
-  while !name.empty?
-    push_to_array(name, cohort.to_sym)
+  loop do
+    input = STDIN.gets.chomp
+    break if input == ""
+    name, cohort = input.split(", ")
+    cohort ||= "november"
+    add_to_students(name, cohort.to_sym)
     puts "We now have #{@students.count} students\n"
-    name = STDIN.gets.chomp
   end
 end
 
@@ -68,10 +69,10 @@ end
 
 def save_data
   filename_choice
-  File.open(@filename, "w") do |file|
+  CSV.open(@filename, "w") do |file|
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
-      file.puts student_data.join(",")
+      file << student_data
     end
   end
 end
@@ -84,11 +85,8 @@ def load_data
 end
 
 def read_data_from_file
-  File.open(@filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(",")
-      push_to_array(name, cohort)
-    end
+  CSV.read(@filename).each do |line|
+    add_to_students(line[0], line[1])
   end
 end
 
@@ -103,7 +101,7 @@ def count_loaded_students_from
   puts "loaded #{@students.count} from #{@filename}"
 end
 
-def push_to_array(name, cohort = :november)
+def add_to_students(name, cohort = :november)
   @students << { :name => name, :cohort => cohort.to_sym }
 end
 
