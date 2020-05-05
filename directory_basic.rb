@@ -6,8 +6,8 @@ def print_header
   puts "-------------"
 end
 
-def print_list_students(array2d = @students)
-  array2d.each { |student| puts "#{student[:name]}, (#{student[:cohort]} cohort)" }
+def print_list_students
+  @students.each { |student| puts "#{student[:name]}, (#{student[:cohort]} cohort)" }
 end
 
 def print_footer(list = @students)
@@ -15,11 +15,13 @@ def print_footer(list = @students)
 end
 
 def input_students
-  puts "Enter the name of students (one per line)"
+  puts "Enter 'name, cohort' empty cohort will default to novemebr"
   puts "To finish enter a black line"
-  name = STDIN.gets.chomp
+  input = STDIN.gets.chomp
+  name, cohort = input.split(", ")
+  cohort ||= "november"
   while !name.empty?
-    push_to_array(name)
+    push_to_array(name, cohort.to_sym)
     puts "We now have #{@students.count} students\n"
     name = STDIN.gets.chomp
   end
