@@ -10,8 +10,8 @@ def print_list_students
   @students.each { |student| puts "#{student[:name]}, (#{student[:cohort]} cohort)" }
 end
 
-def print_footer(list = @students)
-  puts "Overall we have #{list.count} students\n"
+def print_footer
+  puts "Overall we have #{@students.count} students\n"
 end
 
 def input_students
@@ -29,7 +29,7 @@ end
 
 def process(user_choice)
   case user_choice
-  when 1.to_s
+  when 1.to_s9
     input_students
   when 2.to_s
     output_students

@@ -5,7 +5,7 @@ The student directory script allows you to manage the students at the Villians A
 ## How to use ##
 
 ```shell
-ruby directory_basic.rb 
+ruby directory_step14.rb 
 or
-ruby directory_basic.rb students.csv (to load data from file)
+ruby directory_step14.rb students.csv (to load data from file)
 ```
